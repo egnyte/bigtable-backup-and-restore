@@ -55,7 +55,8 @@ def main():
         blob.upload_from_string('\n'.join(column_families))
 
         # TODO: This spawns individual Dataflow job for each table, which is quite an overhead.
-        #  Replace the jar with our own code using https://beam.apache.org/releases/pydoc/2.12.0/. Or hope for
+        #  Try replacing the jar with our own code using Apache Beam (https://pypi.org/project/apache-beam/) Python SDK
+        #  (https://github.com/apache/beam/tree/master/sdks/python)? Or hope for
         #  https://github.com/googleapis/cloud-bigtable-client/issues/2180 ("Add support for exporting from multiple
         #  tables at once") getting done by the upstream, so that the bigtable-beam-import.jar accepts *multiple*
         #  `bigtableTableId`'s and processes them in *sequence*, in a *single Dataflow job*.
