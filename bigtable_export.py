@@ -11,7 +11,7 @@ import time
 import logging
 import subprocess
 import re
-from google.cloud import bigtable, storage
+# from google.cloud import bigtable, storage
 
 logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.WARNING)
 
@@ -87,7 +87,11 @@ if __name__ == '__main__':
     required.add_argument('--gcp_project', help='ID of the Bigtable instance parent GCP project.', required=True)
     required.add_argument('--bigtable_instance_id', help='ID of the Bigtable instance.', required=True)
     required.add_argument('--bigtable_cluster_id', help='ID of the cluster in the Bigtable instance.', required=True)
-    required.add_argument('--bucket_name', help='GCS bucket name to dump the Bigtable tables into.', required=True)
+    required.add_argument('--bucket_name', help='GCS bucket name to dump the Bigtable tables into. The Hadoop sequence '
+                                                'files will be saved in a directory named after the export start time, '
+                                                'in format `YYYY-mm-dd-HH-MM-SS` (eg. `2019-11-02-10-00-16/`), with '
+                                                'each table contents in a sudbirectory there, named after the table '
+                                                'name.', required=True)
     parser.add_argument('--table_id_prefix', help='Backup only the tables with this prefix in their ID.',
                         required=False, default='')
     # required.add_argument('--auth_json_path', help='Path to the Google credentials JSON file with a service account key.', required=True)

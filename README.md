@@ -4,11 +4,14 @@ https://github.com/googleapis/java-bigtable-hbase) library and client in the for
 available at https://repo1.maven.org/maven2/com/google/cloud/bigtable/bigtable-beam-import/. Both scripts require the
 user to specify the jar's location via `--beam_jar_path` parameter.
 
-The jar spawns Dataflow jobs to export/import Bigtable contents to/from a GCS bucket, as a series of Hadoop sequence
-files, 1 job per each input table (as per the jar's limitation - see the [respective feature request](
+The jar spawns Dataflow jobs to export/import Bigtable contents to/from a GCS bucket directory, 1 job per each input
+table (as per the jar's limitation - see the [respective feature request](
 https://github.com/googleapis/cloud-bigtable-client/issues/2180)), 1 job at a time (to avoid overloading the Bigtable
-cluster). When ran for the 1st time per a given bucket (in either the import or export mode), the jar uploads itself to
-the bucket's `jar-temp/staging/` location. Dataflow takes it from there and deploys it on its nodes, according to the
+cluster). The directory is named after the export start time, in format `YYYY-mm-dd-HH-MM-SS`. The tables' contents are
+saved as a series of Hadoop sequence files in a sudbirectory there, named after the table name.
+
+When ran for the 1st time per a given bucket (in either the import or export mode), the jar uploads itself to the
+bucket's `jar-temp/staging/` location. Dataflow takes it from there and deploys it on its nodes, according to the
 parameters specified on scripts' command line. See the output of `bigtable_export.py --help` and `bigtable_import.py
 --help` for a list of the supported parameters.    
 
