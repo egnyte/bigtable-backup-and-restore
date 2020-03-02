@@ -12,7 +12,7 @@ import logging
 import subprocess
 import re
 from google.cloud import bigtable, storage
-    
+
 logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%Y-%m-%dT%H:%M:%S', level=logging.WARNING)
 
 
