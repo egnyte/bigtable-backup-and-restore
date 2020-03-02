@@ -105,8 +105,8 @@ if __name__ == '__main__':
     required.add_argument('--bigtable_instance_id', help='ID of the Bigtable instance.', required=True)
     required.add_argument('--bigtable_cluster_id', help='ID of the cluster in the Bigtable instance.', required=True)
     required.add_argument('--bucket_name', help='GCS bucket name to fetch the Bigtable dumps from.', required=True)
-    required.add_argument('--backup_gcs_dir', help='Bucket directory containing the Bigtable dumps to be imported.',
-                          required=True)
+    required.add_argument('--backup_gcs_dir', help='Bucket directory with subdirectories containing the Hadoop sequence'
+                                                   'files to be imported.', required=True)
     parser.add_argument('--force', help='Proceed with import even if there\'s no successful backup marker blob at the '
                                         'GCS location indicated by `--backup_gcs_dir`.', required=False,
                         action='store_true')

@@ -7,8 +7,8 @@ user to specify the jar's location via `--beam_jar_path` parameter.
 The jar spawns Dataflow jobs to export/import Bigtable contents to/from a GCS bucket directory, 1 job per each input
 table (as per the jar's limitation - see the [respective feature request](
 https://github.com/googleapis/cloud-bigtable-client/issues/2180)), 1 job at a time (to avoid overloading the Bigtable
-cluster). The directory is named after the export start time, in `YYYY-mm-dd-HH-MM-SS format`. Each table is dumped as
-a series of Hadoop sequence files into its sudbirectory, named after the table name.
+cluster). The directory is named after the export start time, in `YYYY-mm-dd-HH-MM-SS` format. Each input table is
+saved as a series of Hadoop sequence files in its sudbirectory named after the table name.
 
 When ran for the 1st time per a given bucket (in either the import or export mode), the jar uploads itself to the
 bucket's `jar-temp/staging/` location. Dataflow takes it from there and deploys it on its nodes, according to the
