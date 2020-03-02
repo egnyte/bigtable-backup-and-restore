@@ -89,8 +89,8 @@ if __name__ == '__main__':
     required.add_argument('--bigtable_cluster_id', help='ID of the cluster in the Bigtable instance.', required=True)
     required.add_argument('--bucket_name', help='GCS bucket name to dump the Bigtable tables into. The output directory'
                                                 ' is named after the export start time, in `YYYY-mm-dd-HH-MM-SS` '
-                                                'format. Input tables are saved as a series of Hadoop sequence files '
-                                                'into its sudbirectories named after the table names.', required=True)
+                                                'format. Input tables are saved as series of Hadoop sequence files in '
+                                                'its sudbirectories named after the table names.', required=True)
     parser.add_argument('--table_id_prefix', help='Backup only the tables with this prefix in their ID.',
                         required=False, default='')
     # required.add_argument('--auth_json_path', help='Path to the Google credentials JSON file with a service account key.', required=True)
