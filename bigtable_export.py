@@ -70,7 +70,7 @@ def main():
                                '--maxNumWorkers='+node_count,
                                '--diskSizeGb=30',
                                '--sdkWorkerParallelism=0',
-                               '--workerMachineType=n1-highcpu-8',
+                               '--workerMachineType=e2-highcpu-8',
                                '--jobName=bt-backup-'+date+'-'+re.sub('[^-a-z0-9]', '-', table_short_name.lower()),
                                '--region='+cluster_region,
                                '--bigtableMaxVersions=1'])
