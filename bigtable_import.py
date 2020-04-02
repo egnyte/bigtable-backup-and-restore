@@ -92,7 +92,7 @@ def main():
                                    '--tempLocation='+'gs://'+args.bucket_name+'/jar-temp',
                                    '--maxNumWorkers='+node_count,
                                    '--diskSizeGb=30',
-                                   '--workerMachineType=n1-standard-1',
+                                   '--workerMachineType=e1-standard-1',
                                    '--jobName=bt-restore-'+date+'-'+re.sub('[^-a-z0-9]', '-', table_short_name.lower()),
                                    '--region='+cluster_region])
 
