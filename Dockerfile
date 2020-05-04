@@ -13,6 +13,6 @@ RUN yum --assumeyes install  python3-pip java-1.8.0-openjdk-headless \
 RUN pip3 install --no-cache-dir --upgrade pip setuptools
 RUN pip install --no-cache-dir --requirement /tmp/requirements.txt
 
-ARG bt_jar_ver=1.13.0
+ARG bt_jar_ver=1.14.0
 RUN curl --progress-bar --output /usr/local/lib/bigtable-beam-import.jar \
 https://repo1.maven.org/maven2/com/google/cloud/bigtable/bigtable-beam-import/${bt_jar_ver}/bigtable-beam-import-${bt_jar_ver}-shaded.jar
