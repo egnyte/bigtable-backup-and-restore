@@ -9,6 +9,7 @@ __author__ = "Maciej Sieczka <msieczka@egnyte.com>"
 import argparse
 import time
 import logging
+import pickle
 import subprocess
 import re
 from google.cloud import bigtable, storage
@@ -50,9 +51,11 @@ def main():
         logging.warning('Exporting table "{}" from Bigtable instance "{}" to GCS at "{}".'.
                         format(table_short_name, args.bigtable_instance_id, args.bucket_name+'/'+date+'/'+table_short_name+'/'))
 
-        column_families = [*instance.table(table_short_name).list_column_families().keys()]
+        column_families = {key: val.gc_rule for (key, val) in
+                           instance.table(table_short_name).list_column_families().items()}
+
         blob = bucket.blob(date+'/'+table_short_name+'/'+table_short_name+'.families')
-        blob.upload_from_string('\n'.join(column_families))
+        blob.upload_from_string(pickle.dumps(column_families))
 
         # TODO: This spawns individual Dataflow job for each table, which is quite an overhead.
         #  Try replacing the jar with our own code using Apache Beam (https://pypi.org/project/apache-beam/) Python SDK

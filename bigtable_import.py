@@ -9,6 +9,7 @@ __author__ = "Maciej Sieczka <msieczka@egnyte.com>"
 import argparse
 import time
 import logging
+import pickle
 import subprocess
 import re
 from google.cloud import bigtable, storage
@@ -36,9 +37,6 @@ def main():
     node_count = str(cluster.serve_nodes or 1)
     cluster_zone = cluster.location_id
     cluster_region = '-'.join(cluster_zone.split('-')[0:-1])
-
-    # MaxVersionsGCRule(1) gives "versions() > 1" on `cbt -project <project> -instance <instance> ls <table-id>` output.
-    max_versions = bigtable.column_family.MaxVersionsGCRule(1)
 
     successful_backup_marker = bucket.blob(args.backup_gcs_dir+'/'+'this_backup_went_ok')
 
@@ -74,7 +72,7 @@ def main():
                             format(table_short_name, args.bigtable_instance_id, source_pattern))
 
             blob = bucket.get_blob(args.backup_gcs_dir+'/'+table_short_name+'/'+table_short_name+'.families')
-            column_families = {k: max_versions for k in blob.download_as_string().decode('utf-8').split('\n')}
+            column_families = pickle.loads(blob.download_as_string())
             table = instance.table(table_short_name)
             table.create(column_families=column_families)
 
