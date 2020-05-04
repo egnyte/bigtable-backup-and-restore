@@ -52,12 +52,13 @@ def main():
     tables_bt = frozenset(t.name.split('/')[-1] for t in instance.list_tables())
 
     # We'll skip import for GCS table dumps which have the same name as a table on the destination Bigtable instance.
-    tables = tables_gcs - tables_bt
+    tables_common = tables_gcs.intersection(tables_bt)
+    tables = tables_gcs - tables_common
 
-    if tables_bt and tables_gcs:
+    if tables_common:
         logging.warning('WATCH OUT!!!')
         logging.warning('The following input tables already exist in the destination Bigtable instance "{}": {}'.
-                        format(args.bigtable_instance_id, ', '.join(tables_bt and tables_gcs)))
+                        format(args.bigtable_instance_id, ', '.join(tables_common)))
         logging.warning('They will NOT be imported. If you want to restore them from backup anyway, remove them from '
                         'the destination Bigtable instance 1st.')
         logging.warning('WATCH OUT!!!')
