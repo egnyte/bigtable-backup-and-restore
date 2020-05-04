@@ -35,18 +35,19 @@ instructions.
 ### Running the scripts:
 
 #### 1. Directly on your machine:
-  * Have Java 8 in `/usr/bin/java`. The jar won't work with a newer Java.  
+  * Have Java 8 in `/usr/bin/java`. The jar won't work with a newer Java.
   * `git clone` this repository.
   * `cd` to a directory where you have cloned it.
   * Run `pip install --requirement --user ./requirements.txt`.
   * Run `export GOOGLE_APPLICATION_CREDENTIALS=<path to the Service Account JSON file on your machine>`.
+  * Download the [java-bigtable-hbase shaded jar](https://repo1.maven.org/maven2/com/google/cloud/bigtable/bigtable-beam-import/).
   * Use the scripts as per `bigtable_export.py --help` and `bigtable_import.py --help`.
 
 #### 2. In a container, using our Docker image:
   * `git clone` this repository.
   * `cd` to a directory where you have cloned it.
   * Build the Docker image: `docker build --tag bigtable-backup-and-restore .` (**don't miss the dot at the end**).
-  * Run a Bash session in your container, mounting the GCP Service Account JSON file inside it: `docker run
+  * Run a Bash session in your container, having mounted the GCP Service Account JSON file inside it: `docker run
   --volume=<path to the Service Account JSON file on your machine>:/root/service_account.json --rm --interactive --tty
   bigtable-backup-and-restore:latest /bin/bash`.
   * In the container's Bash session:
@@ -58,10 +59,8 @@ instructions.
 A couple things could be improved in the scripts, e.g.:
   * The hardcoded Dataflow machine types, optimal for backup and restore performance with our Bigtable data. Make this
   customizable?
-  * The number of cell versions to be exported fixed at 1. We don't need more, yet. Maybe you do?
+  * The number of cell versions to be exported fixed at 1. We don't need more, at least yet. Maybe you do?
   * No support for specific table names. Prefix wildcards work best for us, so far. A nice option to have though.
-  * Hardcoded Google Python libraries versions in `requirements.txt`. I haven't tried the scripts against the newer
-  ones, and they might have breaking changes. But update is in order, sooner or later.
 
 And of course there still might be bugs lurking, even though we've used this tooling at Egnyte for months now, without
 issues.
